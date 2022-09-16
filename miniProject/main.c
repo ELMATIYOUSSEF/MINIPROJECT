@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 
 // ________________________________________Structures section
 
@@ -27,35 +28,34 @@ void printIntro(){
 // function compte a rebours ;
 void printCountDown(){
   int count =5;
-  printf("Coureurs prêts ! Dans...");
+  printf("Coureurs prets ! Dans...");
   while(count>=0){
   	printf("\n %d ",count);
   	count--;
-  	sleep(2);
-  	//System("clear");
+  	sleep(1);
   }
   printf("\n Course !");
   }
 
 //la function pour affiche La première place dons un tour
 void printFirstPlaceAfterLAp(Race race ){
-	printf("Après le tour numéro %d La première place est occupée par : %s dans la voiture de course %s !",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
+	printf("Apres le tour numero %d La premiere place est occupee par : %s dans la voiture de course %s ! \n",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
 		
 }
 
 
 // la course termine nous devons féliciter le gagnant et dire au public que la course est terminée
 void printCongratulation(Race race){
-		printf(" Félicitons tous %S, dans la voiture de course %s, pour son incroyable performance.'était vraiment une belle course et bonne nuit à tous ! ",race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
+		printf(" Felicitons tour %s, dans la voiture de course %s, pour son incroyable performance.etait vraiment une belle course et bonne nuit a tous ! ",race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
 }
 
 
 // la function calculate Time To Complete un tour 
  int calculateTimeToCompleteLap(){
  	int vitesse, acceleration,nerves ;
- 	vitesse = (rand()%3) +1 ;
- 	acceleration=(rand()%3) +1 ;
- 	nerves=(rand()%3) +1 ;
+ 	vitesse = rand()%10 +1 ;
+ 	acceleration=rand()%10 +1 ;
+ 	nerves=rand()%10 +1 ;
  	switch(nerves)
 	 {
 	 	case 1 :
@@ -86,13 +86,13 @@ void updateFirstPlace(Race *race, RaceCar *raceCare1 , RaceCar *raceCare2)
 	if(raceCare1 -> totalLapTime <= raceCare2-> totalLapTime)
 	{
 	strcpy(race->firstPlaceDriverName , raceCare1 ->driveName );
-	strcpy(race->firstPlaceRaceCarColor , raceCare1->driveName );
+	strcpy(race->firstPlaceRaceCarColor , raceCare1->raceCarColor );
 	
 	}
 	else 
 	{
 		strcpy(race->firstPlaceDriverName , raceCare2 ->driveName );
-	strcpy(race->firstPlaceRaceCarColor , raceCare2->driveName );
+	strcpy(race->firstPlaceRaceCarColor , raceCare2-> raceCarColor);
 	}
 }
 
@@ -111,18 +111,26 @@ void startRace(RaceCar *racecar1 ,RaceCar *racecar2)
 	 {
 	 	updateRaceCar(racecar1);
 	 	updateRaceCar(racecar2);
+		updateFirstPlace(&race,racecar1,racecar2);
+	 	printFirstPlaceAfterLAp(race);
+	 	race.currentLap+=1 ;
 	 }
-	 updateFirstPlace(&race,racecar1,racecar2);
+	 
+	 
 	 printCongratulation(race);
  }
 
 //________________________________________________________________________________________________________MAin
 int main()
 {
+	srand(time(NULL));
 	RaceCar carA ={"Youssef","Red",0};
 	RaceCar carB ={"Saad","Black",0};
+	system("COLOR 0C");
 	printIntro();
 	printCountDown();
+	system("cls");
+	system("COLOR 1F");
 	startRace(&carA,&carB);
-	srand(time(NULL));
+	
 }
